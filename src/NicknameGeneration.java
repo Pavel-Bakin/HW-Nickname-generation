@@ -32,7 +32,7 @@ public class NicknameGeneration {
 
         Thread thread2 = new Thread(() -> {
             for (String text : texts) {
-                if (isBeautifulPalindrome(text, 4)) {
+                if (isBeautifulRepeating(text, 4)) {
                     beautifulWords4.incrementAndGet();
                 }
             }
@@ -40,7 +40,7 @@ public class NicknameGeneration {
 
         Thread thread3 = new Thread(() -> {
             for (String text : texts) {
-                if (isBeautifulPalindrome(text, 5)) {
+                if (isBeautifulOrdered(text, 5)) {
                     beautifulWords5.incrementAndGet();
                 }
             }
@@ -68,21 +68,47 @@ public class NicknameGeneration {
             return false;
         }
 
-        char[] chars = word.toCharArray();
+        int left = 0;
+        int right = length - 1;
 
-        //Проверка палиндрома
-        for (int i = 0; i < length / 2; i++) {
-            if (chars[i] != chars[length - i - 1]) {
+        while (left < right) {
+            if (word.charAt(left) != word.charAt(right)) {
                 return false;
             }
+            left++;
+            right--;
         }
 
-        //Проверка на упорядоченность букв
+        return true;
+    }
+
+    public static boolean isBeautifulRepeating(String word, int length) {
+        if (word.length() != length) {
+            return false;
+        }
+
+        char firstChar = word.charAt(0);
+
         for (int i = 1; i < length; i++) {
-            if (chars[i] < chars[i - 1]) {
+            if (word.charAt(i) != firstChar) {
                 return false;
             }
         }
+
+        return true;
+    }
+
+    public static boolean isBeautifulOrdered(String word, int length) {
+        if (word.length() != length) {
+            return false;
+        }
+
+        for (int i = 1; i < length; i++) {
+            if (word.charAt(i) < word.charAt(i - 1)) {
+                return false;
+            }
+        }
+
         return true;
     }
 }
