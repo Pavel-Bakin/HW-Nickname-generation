@@ -24,24 +24,24 @@ public class NicknameGeneration {
 
         Thread thread1 = new Thread(() -> {
             for (String text : texts) {
-                if (isBeautifulPalindrome(text, 3)) {
-                    beautifulWords3.incrementAndGet();
+                if (isBeautifulPalindrome(text)) {
+                    incrementBeautifulWords(3);
                 }
             }
         });
 
         Thread thread2 = new Thread(() -> {
             for (String text : texts) {
-                if (isBeautifulRepeating(text, 4)) {
-                    beautifulWords4.incrementAndGet();
+                if (isBeautifulRepeating(text)) {
+                    incrementBeautifulWords(4);
                 }
             }
         });
 
         Thread thread3 = new Thread(() -> {
             for (String text : texts) {
-                if (isBeautifulOrdered(text, 5)) {
-                    beautifulWords5.incrementAndGet();
+                if (isBeautifulOrdered(text)) {
+                    incrementBeautifulWords(5);
                 }
             }
         });
@@ -63,11 +63,8 @@ public class NicknameGeneration {
         System.out.println("Красивых слов с длиной 5: " + beautifulWords5 + " шт!");
     }
 
-    public static boolean isBeautifulPalindrome(String word, int length) {
-        if (word.length() != length) {
-            return false;
-        }
-
+    public static boolean isBeautifulPalindrome(String word) {
+        int length = word.length();
         int left = 0;
         int right = length - 1;
 
@@ -82,14 +79,10 @@ public class NicknameGeneration {
         return true;
     }
 
-    public static boolean isBeautifulRepeating(String word, int length) {
-        if (word.length() != length) {
-            return false;
-        }
-
+    public static boolean isBeautifulRepeating(String word) {
         char firstChar = word.charAt(0);
 
-        for (int i = 1; i < length; i++) {
+        for (int i = 1; i < word.length(); i++) {
             if (word.charAt(i) != firstChar) {
                 return false;
             }
@@ -98,17 +91,23 @@ public class NicknameGeneration {
         return true;
     }
 
-    public static boolean isBeautifulOrdered(String word, int length) {
-        if (word.length() != length) {
-            return false;
-        }
-
-        for (int i = 1; i < length; i++) {
+    public static boolean isBeautifulOrdered(String word) {
+        for (int i = 1; i < word.length(); i++) {
             if (word.charAt(i) < word.charAt(i - 1)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    public static void incrementBeautifulWords(int length) {
+        if (length == 3) {
+            beautifulWords3.incrementAndGet();
+        } else if (length == 4) {
+            beautifulWords4.incrementAndGet();
+        } else if (length == 5) {
+            beautifulWords5.incrementAndGet();
+        }
     }
 }
