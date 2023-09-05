@@ -25,7 +25,7 @@ public class NicknameGeneration {
         Thread thread1 = new Thread(() -> {
             for (String text : texts) {
                 if (isBeautifulPalindrome(text)) {
-                    incrementBeautifulWords(3);
+                    incrementBeautifulWords(text.length());
                 }
             }
         });
@@ -33,7 +33,7 @@ public class NicknameGeneration {
         Thread thread2 = new Thread(() -> {
             for (String text : texts) {
                 if (isBeautifulRepeating(text)) {
-                    incrementBeautifulWords(4);
+                    incrementBeautifulWords(text.length());
                 }
             }
         });
@@ -41,7 +41,7 @@ public class NicknameGeneration {
         Thread thread3 = new Thread(() -> {
             for (String text : texts) {
                 if (isBeautifulOrdered(text)) {
-                    incrementBeautifulWords(5);
+                    incrementBeautifulWords(text.length());
                 }
             }
         });
